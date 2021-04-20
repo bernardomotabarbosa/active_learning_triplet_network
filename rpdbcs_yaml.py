@@ -1,7 +1,7 @@
 import yaml
+from modAL.uncertainty import entropy_sampling
 import query_functions
 from query_functions import query_function_wrapper
-from modAL.uncertainty import entropy_sampling
 
 _query_dict = {
     'random': query_functions.random_sampling,
@@ -13,7 +13,8 @@ _attrs = [
     'test_size',
     'query_size',
     'budget',
-    'query_strategies',
+    'withdrawn_category',
+    'query_strategies'
 ]
 
 
@@ -46,6 +47,7 @@ class RALConfig:
 
 
 def load_yaml(yaml_file, dataset_path, save_file):
+
     with open(yaml_file) as yaml_stream:
         al_file = yaml.load(yaml_stream, Loader=yaml.FullLoader)
         return RALConfig(dataset_path, save_file, **al_file)

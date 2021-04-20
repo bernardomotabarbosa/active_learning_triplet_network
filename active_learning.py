@@ -4,7 +4,6 @@ from scipy.spatial import distance
 
 
 def query(model, Xpool, X_train, Y_train, query_size):
-
     transform_x0 = model['transformer'].transform(X_train)
 
     # creates an array of indices, sorted by unique element
@@ -34,7 +33,10 @@ def query(model, Xpool, X_train, Y_train, query_size):
     return distances.argsort()[:query_size]
 
 
-def distance_active_learning(model, X0, Y0, Xpool, Ypool, Xtest, Ytest, query_size, query_budget, metrics, classifier_name):
+def distance_active_learning(model, X0, Y0, Xpool, Ypool, Xtest, Ytest, query_size, query_budget, metrics,
+                             classifier_name):
+    unique, counts = np.unique(Y0, return_counts=True)
+    dict_y0_initial = dict(zip(unique, counts))
 
     inital_len_x0 = len(X0)
 
@@ -48,7 +50,8 @@ def distance_active_learning(model, X0, Y0, Xpool, Ypool, Xtest, Ytest, query_si
         if (query_budget < query_size):
             query_size = query_budget
 
-        print(f'----------------------------------- my query_budget {query_budget} --------------------------------------------')
+        print(
+            f'----------------------------------- my query_budget {query_budget} --------------------------------------------')
 
         query_idx = query(model, Xpool, X0, Y0, query_size)
 
@@ -77,10 +80,19 @@ def distance_active_learning(model, X0, Y0, Xpool, Ypool, Xtest, Ytest, query_si
     Results = {}
     Results[classifier_name] = scores
 
-    return Results
+    unique, counts = np.unique(Y0, return_counts=True)
+    dicta_y0_final = dict(zip(unique, counts))
+    list_diff = []
+    for id in range(len(dict_y0_initial)):
+        list_diff.append(dicta_y0_final[id] - dict_y0_initial[id])
+
+    percent_each_class = list_diff / np.sum(list_diff)
+
+    return Results, percent_each_class
 
 
-def active_learning(active_estimator: ActiveLearner, Xpool, Ypool, Xtest, Ytest, query_size: int, query_budget: int, metrics):
+def active_learning(active_estimator: ActiveLearner, Xpool, Ypool, Xtest, Ytest, query_size: int, query_budget: int,
+                    metrics):
     """
     Peforms active learning with speficied estimator and dataset.
     Args:
@@ -91,11 +103,15 @@ def active_learning(active_estimator: ActiveLearner, Xpool, Ypool, Xtest, Ytest,
         The value of the dict is a numpy array of size ceil(query_budget/query_size) + 1`
     """
     preds = active_estimator.predict(Xtest)
-    Result = {'test_'+name: [m(Ytest, preds)] for name, m in metrics.items()}
+    Result = {'test_' + name: [m(Ytest, preds)] for name, m in metrics.items()}
     queried_samples = [0]
     queried_idxs = []
-    while(query_budget > 0):
-        if(query_budget < query_size):
+
+    unique, counts = np.unique(active_estimator.y_training, return_counts=True)
+    dict_y0_initial = dict(zip(unique, counts))
+
+    while (query_budget > 0):
+        if (query_budget < query_size):
             query_size = query_budget
         query_idx, _ = active_estimator.query(Xpool, X0=active_estimator.X_training,
                                               n_instances=query_size)  # TODO: see active_estimator.X_training
@@ -104,11 +120,21 @@ def active_learning(active_estimator: ActiveLearner, Xpool, Ypool, Xtest, Ytest,
         Ypool = np.delete(Ypool, query_idx, axis=0)
         preds = active_estimator.predict(Xtest)
         for name, m in metrics.items():
-            Result['test_'+name].append(m(Ytest, preds))
-        queried_samples.append(queried_samples[-1]+query_size)
+            Result['test_' + name].append(m(Ytest, preds))
+        queried_samples.append(queried_samples[-1] + query_size)
         queried_idxs.append(np.array(query_idx))
+        print(
+            f'----------------------------------- modAL query_budget {query_budget} --------------------------------------------')
         query_budget -= query_size
-        print(f'----------------------------------- modAL query_budget {query_budget} --------------------------------------------')
     Result['queried samples'] = queried_samples
     Result['queried idxs'] = queried_idxs
-    return {name: np.array(r) for name, r in Result.items()}
+
+    unique, counts = np.unique(active_estimator.y_training, return_counts=True)
+    dicta_y0_final = dict(zip(unique, counts))
+    list_diff = []
+    for id in range(len(dict_y0_initial)):
+        list_diff.append(dicta_y0_final[id] - dict_y0_initial[id])
+
+    percent_each_class = list_diff / np.sum(list_diff)
+
+    return {name: np.array(r) for name, r in Result.items()}, percent_each_class

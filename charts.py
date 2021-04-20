@@ -1,7 +1,8 @@
 import pandas as pd
 import os
 
-path = 'results_1/dfs/'
+path = 'results_2/all/dfs/'
+
 files = os.listdir(path)
 
 f = files[0]

@@ -1,0 +1,253 @@
+classifier name,metric name,step,train size,value
+tripletnet + RF,accuracy,0,957,0.9349397590361446
+tripletnet + RF,accuracy,1,982,0.9385542168674699
+tripletnet + RF,accuracy,2,1007,0.939156626506024
+tripletnet + RF,accuracy,3,1032,0.9367469879518072
+tripletnet + RF,accuracy,4,1057,0.9433734939759036
+tripletnet + RF,accuracy,5,1082,0.9433734939759036
+tripletnet + RF,accuracy,6,1107,0.9536144578313253
+tripletnet + RF,accuracy,7,1132,0.9421686746987952
+tripletnet + RF,accuracy,8,1157,0.9542168674698795
+tripletnet + RF,accuracy,9,1182,0.9481927710843373
+tripletnet + RF,accuracy,10,1207,0.9487951807228916
+tripletnet + RF,accuracy,11,1232,0.9614457831325302
+tripletnet + RF,accuracy,12,1257,0.9506024096385542
+tripletnet + RF,accuracy,13,1282,0.9554216867469879
+tripletnet + RF,accuracy,14,1307,0.9620481927710843
+tripletnet + RF,accuracy,15,1332,0.95
+tripletnet + RF,accuracy,16,1357,0.9530120481927711
+tripletnet + RF,accuracy,17,1382,0.9602409638554217
+tripletnet + RF,accuracy,18,1407,0.9644578313253012
+tripletnet + RF,accuracy,19,1432,0.9542168674698795
+tripletnet + RF,accuracy,20,1457,0.9572289156626506
+tripletnet + RF,f1_macro,0,957,0.679551045008894
+tripletnet + RF,f1_macro,1,982,0.7908617432953113
+tripletnet + RF,f1_macro,2,1007,0.8130835593564931
+tripletnet + RF,f1_macro,3,1032,0.7817678502068472
+tripletnet + RF,f1_macro,4,1057,0.8072796766177491
+tripletnet + RF,f1_macro,5,1082,0.8223017688066069
+tripletnet + RF,f1_macro,6,1107,0.8692097391824113
+tripletnet + RF,f1_macro,7,1132,0.8044660814760481
+tripletnet + RF,f1_macro,8,1157,0.8714274416541687
+tripletnet + RF,f1_macro,9,1182,0.8430047768014186
+tripletnet + RF,f1_macro,10,1207,0.8444535093390195
+tripletnet + RF,f1_macro,11,1232,0.8941868791301413
+tripletnet + RF,f1_macro,12,1257,0.8644353427152074
+tripletnet + RF,f1_macro,13,1282,0.8692409564714507
+tripletnet + RF,f1_macro,14,1307,0.8961476983535389
+tripletnet + RF,f1_macro,15,1332,0.865586202400109
+tripletnet + RF,f1_macro,16,1357,0.8797809745312545
+tripletnet + RF,f1_macro,17,1382,0.8884454065570786
+tripletnet + RF,f1_macro,18,1407,0.8989449216283176
+tripletnet + RF,f1_macro,19,1432,0.8665937717210411
+tripletnet + RF,f1_macro,20,1457,0.8737014539022698
+tripletnet + RF,precision,0,957,0.9240514419832244
+tripletnet + RF,precision,1,982,0.967091574855572
+tripletnet + RF,precision,2,1007,0.945644312710894
+tripletnet + RF,precision,3,1032,0.8908282653575024
+tripletnet + RF,precision,4,1057,0.9444192924455418
+tripletnet + RF,precision,5,1082,0.9275142860496244
+tripletnet + RF,precision,6,1107,0.9294360907512671
+tripletnet + RF,precision,7,1132,0.8788215664331027
+tripletnet + RF,precision,8,1157,0.9391501016736001
+tripletnet + RF,precision,9,1182,0.9075193043736091
+tripletnet + RF,precision,10,1207,0.9219961175556046
+tripletnet + RF,precision,11,1232,0.9424367458850218
+tripletnet + RF,precision,12,1257,0.9167916529417542
+tripletnet + RF,precision,13,1282,0.9282692344366353
+tripletnet + RF,precision,14,1307,0.9464551437920014
+tripletnet + RF,precision,15,1332,0.8998538944899168
+tripletnet + RF,precision,16,1357,0.9304868877278029
+tripletnet + RF,precision,17,1382,0.9289229069884979
+tripletnet + RF,precision,18,1407,0.945016596525561
+tripletnet + RF,precision,19,1432,0.9043835476680225
+tripletnet + RF,precision,20,1457,0.9322798380418972
+tripletnet + RF,recall,0,957,0.6498724356797043
+tripletnet + RF,recall,1,982,0.734945084691271
+tripletnet + RF,recall,2,1007,0.7591709150769533
+tripletnet + RF,recall,3,1032,0.7424186999520206
+tripletnet + RF,recall,4,1057,0.7479743689527087
+tripletnet + RF,recall,5,1082,0.7697538228225135
+tripletnet + RF,recall,6,1107,0.8251494241503569
+tripletnet + RF,recall,7,1132,0.7572179754342405
+tripletnet + RF,recall,8,1157,0.8251946854458586
+tripletnet + RF,recall,9,1182,0.7997905315966853
+tripletnet + RF,recall,10,1207,0.7942482623325352
+tripletnet + RF,recall,11,1232,0.8599138940983286
+tripletnet + RF,recall,12,1257,0.8269342547848126
+tripletnet + RF,recall,13,1282,0.8264261090184732
+tripletnet + RF,recall,14,1307,0.8581986342023482
+tripletnet + RF,recall,15,1332,0.836911497263117
+tripletnet + RF,recall,16,1357,0.8422309006247428
+tripletnet + RF,recall,17,1382,0.8576594687807548
+tripletnet + RF,recall,18,1407,0.8640855983129129
+tripletnet + RF,recall,19,1432,0.8373642443416036
+tripletnet + RF,recall,20,1457,0.8331003167307133
+tripletnet + RF [random],accuracy,0,957,0.9349397590361446
+tripletnet + RF [random],accuracy,1,982,0.9307228915662651
+tripletnet + RF [random],accuracy,2,1007,0.927710843373494
+tripletnet + RF [random],accuracy,3,1032,0.9379518072289157
+tripletnet + RF [random],accuracy,4,1057,0.9325301204819277
+tripletnet + RF [random],accuracy,5,1082,0.9246987951807228
+tripletnet + RF [random],accuracy,6,1107,0.936144578313253
+tripletnet + RF [random],accuracy,7,1132,0.9301204819277108
+tripletnet + RF [random],accuracy,8,1157,0.9421686746987952
+tripletnet + RF [random],accuracy,9,1182,0.9355421686746987
+tripletnet + RF [random],accuracy,10,1207,0.9379518072289157
+tripletnet + RF [random],accuracy,11,1232,0.9385542168674699
+tripletnet + RF [random],accuracy,12,1257,0.9427710843373494
+tripletnet + RF [random],accuracy,13,1282,0.9427710843373494
+tripletnet + RF [random],accuracy,14,1307,0.9463855421686747
+tripletnet + RF [random],accuracy,15,1332,0.944578313253012
+tripletnet + RF [random],accuracy,16,1357,0.9463855421686747
+tripletnet + RF [random],accuracy,17,1382,0.9409638554216867
+tripletnet + RF [random],accuracy,18,1407,0.9421686746987952
+tripletnet + RF [random],accuracy,19,1432,0.9524096385542169
+tripletnet + RF [random],accuracy,20,1457,0.946987951807229
+tripletnet + RF [random],f1_macro,0,957,0.679551045008894
+tripletnet + RF [random],f1_macro,1,982,0.720879972845827
+tripletnet + RF [random],f1_macro,2,1007,0.6995988118992515
+tripletnet + RF [random],f1_macro,3,1032,0.7622554272368507
+tripletnet + RF [random],f1_macro,4,1057,0.7407044770421732
+tripletnet + RF [random],f1_macro,5,1082,0.705624905570901
+tripletnet + RF [random],f1_macro,6,1107,0.7302960625927855
+tripletnet + RF [random],f1_macro,7,1132,0.7274065369056704
+tripletnet + RF [random],f1_macro,8,1157,0.7970298599680463
+tripletnet + RF [random],f1_macro,9,1182,0.735158752318462
+tripletnet + RF [random],f1_macro,10,1207,0.7555476528904073
+tripletnet + RF [random],f1_macro,11,1232,0.7615725532460741
+tripletnet + RF [random],f1_macro,12,1257,0.7618748777133934
+tripletnet + RF [random],f1_macro,13,1282,0.7519622212530475
+tripletnet + RF [random],f1_macro,14,1307,0.7640094565428062
+tripletnet + RF [random],f1_macro,15,1332,0.8226562025337344
+tripletnet + RF [random],f1_macro,16,1357,0.8253601216107734
+tripletnet + RF [random],f1_macro,17,1382,0.8154230181640371
+tripletnet + RF [random],f1_macro,18,1407,0.815849634072681
+tripletnet + RF [random],f1_macro,19,1432,0.8311314019914127
+tripletnet + RF [random],f1_macro,20,1457,0.8353545285295961
+tripletnet + RF [random],precision,0,957,0.9240514419832244
+tripletnet + RF [random],precision,1,982,0.9466725708456531
+tripletnet + RF [random],precision,2,1007,0.9055387383846571
+tripletnet + RF [random],precision,3,1032,0.9228515167912089
+tripletnet + RF [random],precision,4,1057,0.952719050974865
+tripletnet + RF [random],precision,5,1082,0.9290997381306922
+tripletnet + RF [random],precision,6,1107,0.9150304893104302
+tripletnet + RF [random],precision,7,1132,0.9180160743431347
+tripletnet + RF [random],precision,8,1157,0.9469593265765136
+tripletnet + RF [random],precision,9,1182,0.8951320396259858
+tripletnet + RF [random],precision,10,1207,0.9108846475968067
+tripletnet + RF [random],precision,11,1232,0.9299675945530467
+tripletnet + RF [random],precision,12,1257,0.9400966903354518
+tripletnet + RF [random],precision,13,1282,0.9308305853021033
+tripletnet + RF [random],precision,14,1307,0.9530964759359367
+tripletnet + RF [random],precision,15,1332,0.9053746561253962
+tripletnet + RF [random],precision,16,1357,0.9423407337478433
+tripletnet + RF [random],precision,17,1382,0.9160105762644768
+tripletnet + RF [random],precision,18,1407,0.9083484848484848
+tripletnet + RF [random],precision,19,1432,0.9324260663147568
+tripletnet + RF [random],precision,20,1457,0.9356427470754628
+tripletnet + RF [random],recall,0,957,0.6498724356797043
+tripletnet + RF [random],recall,1,982,0.6581778019742406
+tripletnet + RF [random],recall,2,1007,0.6442152662447624
+tripletnet + RF [random],recall,3,1032,0.7169643825887304
+tripletnet + RF [random],recall,4,1057,0.6740783257757837
+tripletnet + RF [random],recall,5,1082,0.6415897845138521
+tripletnet + RF [random],recall,6,1107,0.6777019020352534
+tripletnet + RF [random],recall,7,1132,0.6671756472179442
+tripletnet + RF [random],recall,8,1157,0.73567991022026
+tripletnet + RF [random],recall,9,1182,0.6759421531578561
+tripletnet + RF [random],recall,10,1207,0.6948994464204896
+tripletnet + RF [random],recall,11,1232,0.695477644851618
+tripletnet + RF [random],recall,12,1257,0.6956103394817845
+tripletnet + RF [random],recall,13,1282,0.690593966423189
+tripletnet + RF [random],recall,14,1307,0.6972997453066214
+tripletnet + RF [random],recall,15,1332,0.7734692015700186
+tripletnet + RF [random],recall,16,1357,0.7662593628046179
+tripletnet + RF [random],recall,17,1382,0.761588500926681
+tripletnet + RF [random],recall,18,1407,0.7624757371486602
+tripletnet + RF [random],recall,19,1432,0.7776186484655773
+tripletnet + RF [random],recall,20,1457,0.7764523144082619
+tripletnet + RF [entropy],accuracy,0,957,0.9349397590361446
+tripletnet + RF [entropy],accuracy,1,982,0.9331325301204819
+tripletnet + RF [entropy],accuracy,2,1007,0.9289156626506024
+tripletnet + RF [entropy],accuracy,3,1032,0.9337349397590361
+tripletnet + RF [entropy],accuracy,4,1057,0.9367469879518072
+tripletnet + RF [entropy],accuracy,5,1082,0.9397590361445783
+tripletnet + RF [entropy],accuracy,6,1107,0.9506024096385542
+tripletnet + RF [entropy],accuracy,7,1132,0.9506024096385542
+tripletnet + RF [entropy],accuracy,8,1157,0.9439759036144578
+tripletnet + RF [entropy],accuracy,9,1182,0.9560240963855422
+tripletnet + RF [entropy],accuracy,10,1207,0.946987951807229
+tripletnet + RF [entropy],accuracy,11,1232,0.9542168674698795
+tripletnet + RF [entropy],accuracy,12,1257,0.9530120481927711
+tripletnet + RF [entropy],accuracy,13,1282,0.9602409638554217
+tripletnet + RF [entropy],accuracy,14,1307,0.9578313253012049
+tripletnet + RF [entropy],accuracy,15,1332,0.9566265060240964
+tripletnet + RF [entropy],accuracy,16,1357,0.9548192771084337
+tripletnet + RF [entropy],accuracy,17,1382,0.9566265060240964
+tripletnet + RF [entropy],accuracy,18,1407,0.9554216867469879
+tripletnet + RF [entropy],accuracy,19,1432,0.9578313253012049
+tripletnet + RF [entropy],accuracy,20,1457,0.9548192771084337
+tripletnet + RF [entropy],f1_macro,0,957,0.679551045008894
+tripletnet + RF [entropy],f1_macro,1,982,0.7728212128409404
+tripletnet + RF [entropy],f1_macro,2,1007,0.6946739625629123
+tripletnet + RF [entropy],f1_macro,3,1032,0.7448789254893835
+tripletnet + RF [entropy],f1_macro,4,1057,0.7207532654989806
+tripletnet + RF [entropy],f1_macro,5,1082,0.8013030741864956
+tripletnet + RF [entropy],f1_macro,6,1107,0.8469799288559214
+tripletnet + RF [entropy],f1_macro,7,1132,0.8457783497918617
+tripletnet + RF [entropy],f1_macro,8,1157,0.8270418011333316
+tripletnet + RF [entropy],f1_macro,9,1182,0.8628045291775862
+tripletnet + RF [entropy],f1_macro,10,1207,0.8407222034363174
+tripletnet + RF [entropy],f1_macro,11,1232,0.8596020866555675
+tripletnet + RF [entropy],f1_macro,12,1257,0.8604349786796813
+tripletnet + RF [entropy],f1_macro,13,1282,0.884260286335331
+tripletnet + RF [entropy],f1_macro,14,1307,0.8834951605785696
+tripletnet + RF [entropy],f1_macro,15,1332,0.8734242351342724
+tripletnet + RF [entropy],f1_macro,16,1357,0.8715716764100145
+tripletnet + RF [entropy],f1_macro,17,1382,0.8816723924449648
+tripletnet + RF [entropy],f1_macro,18,1407,0.8521997192691616
+tripletnet + RF [entropy],f1_macro,19,1432,0.8733585491725779
+tripletnet + RF [entropy],f1_macro,20,1457,0.8782041686658815
+tripletnet + RF [entropy],precision,0,957,0.9240514419832244
+tripletnet + RF [entropy],precision,1,982,0.9249968696597621
+tripletnet + RF [entropy],precision,2,1007,0.9264120545631277
+tripletnet + RF [entropy],precision,3,1032,0.9180197271234869
+tripletnet + RF [entropy],precision,4,1057,0.8689680901446966
+tripletnet + RF [entropy],precision,5,1082,0.8977235408269891
+tripletnet + RF [entropy],precision,6,1107,0.940641206167635
+tripletnet + RF [entropy],precision,7,1132,0.936037513445347
+tripletnet + RF [entropy],precision,8,1157,0.9279916262610521
+tripletnet + RF [entropy],precision,9,1182,0.9309760099866624
+tripletnet + RF [entropy],precision,10,1207,0.9228614159297122
+tripletnet + RF [entropy],precision,11,1232,0.9463523239046518
+tripletnet + RF [entropy],precision,12,1257,0.9360732153517766
+tripletnet + RF [entropy],precision,13,1282,0.9365193455084082
+tripletnet + RF [entropy],precision,14,1307,0.93951311579338
+tripletnet + RF [entropy],precision,15,1332,0.9356009971260202
+tripletnet + RF [entropy],precision,16,1357,0.9372158013013803
+tripletnet + RF [entropy],precision,17,1382,0.9447455587803659
+tripletnet + RF [entropy],precision,18,1407,0.9190632300099983
+tripletnet + RF [entropy],precision,19,1432,0.9150325381912033
+tripletnet + RF [entropy],precision,20,1457,0.9370782124652093
+tripletnet + RF [entropy],recall,0,957,0.6498724356797043
+tripletnet + RF [entropy],recall,1,982,0.7092376357207619
+tripletnet + RF [entropy],recall,2,1007,0.633675810348229
+tripletnet + RF [entropy],recall,3,1032,0.6846268379121186
+tripletnet + RF [entropy],recall,4,1057,0.6671559311551205
+tripletnet + RF [entropy],recall,5,1082,0.7461777953668581
+tripletnet + RF [entropy],recall,6,1107,0.7926651895709426
+tripletnet + RF [entropy],recall,7,1132,0.7978449695293037
+tripletnet + RF [entropy],recall,8,1157,0.771088817404024
+tripletnet + RF [entropy],recall,9,1182,0.8240290796824684
+tripletnet + RF [entropy],recall,10,1207,0.7908953728908191
+tripletnet + RF [entropy],recall,11,1232,0.8073396554941061
+tripletnet + RF [entropy],recall,12,1257,0.8083944029509162
+tripletnet + RF [entropy],recall,13,1282,0.8446471626444474
+tripletnet + RF [entropy],recall,14,1307,0.8428558425958578
+tripletnet + RF [entropy],recall,15,1332,0.830043547269623
+tripletnet + RF [entropy],recall,16,1357,0.8250838271392785
+tripletnet + RF [entropy],recall,17,1382,0.8363369821716147
+tripletnet + RF [entropy],recall,18,1407,0.8054306973370313
+tripletnet + RF [entropy],recall,19,1432,0.8405382493664337
+tripletnet + RF [entropy],recall,20,1457,0.8352775510570071

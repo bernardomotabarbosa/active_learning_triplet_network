@@ -5,6 +5,7 @@ import torch
 from rpdbcs.datahandler.dataset import readDataset
 import skorch
 from modAL import ActiveLearner
+from modAL.models import BayesianOptimizer
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV, StratifiedShuffleSplit
@@ -12,6 +13,7 @@ from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_sc
 from tripletnet.networks import TripletNetwork, lmelloEmbeddingNet
 from tripletnet.datahandler import BalancedDataLoader
 from tripletnet.callbacks import LoadEndState
+from tripletnet.TripletNetClassifierMCDropout import TripletNetClassifierMCDropout
 import itertools
 from tempfile import mkdtemp
 from shutil import rmtree
@@ -22,8 +24,10 @@ import sklearn
 from pathlib import Path
 import argparse
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import VotingClassifier
 from siamese_triplet.networks import ClassificationNet
 import time
+import random
 
 RANDOM_STATE = 1
 np.random.seed(RANDOM_STATE)
@@ -57,7 +61,6 @@ def get_base_classifiers(pre_pipeline=None):
     clfs = []
     rf = RandomForestClassifier(n_estimators=1000, random_state=RANDOM_STATE, n_jobs=-1)
     rf_param_grid = {'max_features': [2, 3, 4, 5]}
-
     clfs.append(("RF", rf, rf_param_grid))
 
     if pre_pipeline is not None:
@@ -75,8 +78,9 @@ def get_call_backs():
     """
     checkpoint_callback = skorch.callbacks.Checkpoint(dirname=DEEP_CACHE_DIR,
                                                       monitor='non_zero_triplets_best')
+
     callbacks = [('non_zero_triplets', skorch.callbacks.PassthroughScoring(name='non_zero_triplets', on_train=True))]
-    callbacks += [checkpoint_callback, LoadEndState(checkpoint_callback)]  # , LRMonitor()]
+    callbacks += [checkpoint_callback, LoadEndState(checkpoint_callback)]
     return callbacks
 
 
@@ -93,7 +97,6 @@ def create_neural_classifier():
 
     checkpoint_callback = skorch.callbacks.Checkpoint(dirname=DEEP_CACHE_DIR,
                                                       monitor='train_loss_best')
-
     callbacks = [checkpoint_callback, LoadEndState(checkpoint_callback)]
 
     parameters = {
@@ -128,7 +131,6 @@ def get_deep_transformers():
         'batch_size': 80,
         'iterator_train': BalancedDataLoader, 'iterator_train__num_workers': 0, 'iterator_train__pin_memory': False,
         'margin_decay_value': 0.75, 'margin_decay_delay': 100}
-
     parameters = {**parameters, **optimizer_parameters}
     deep_transf = []
     tripletnet = TripletNetwork(module__num_outputs=8, init_random_state=100, **parameters)
@@ -136,7 +138,6 @@ def get_deep_transformers():
     tripletnet_param_grid = {'batch_size': [80],
                              'margin_decay_delay': [500],
                              'module__num_outputs': [8]}
-
     deep_transf.append(("tripletnet", tripletnet, tripletnet_param_grid))
 
     return deep_transf
@@ -160,7 +161,6 @@ def get_metrics():
 def build_grid_search(t, base_classif, base_classif_param_grid):
     gridsearch_sampler = StratifiedShuffleSplit(n_splits=1, test_size=0.11, random_state=RANDOM_STATE)
     base_classif = GridSearchCV(base_classif, base_classif_param_grid, cv=gridsearch_sampler, n_jobs=-1)
-
     clf = PipelineExtended([('transformer', t),
                             ('base_classifier', base_classif)],
                            memory=PIPELINE_CACHE_DIR)
@@ -183,36 +183,30 @@ def combine_transformer_classifier(transformers, base_classifiers):
         yield '%s + %s' % (transf_name, base_classif_name), classifier
 
 
-def split_active_learning(X, Y, init_train_size, test_size=0.25, min_sample=5):
-    """
-    Splits dataset into 3 datasets: initial train dataset, pool dataset and test dataset.
-    Pool dataset and test dataset are sampled in a stratified way (same distribution of labels among both datasets).
-    Args:
-        init_train_size (int or float): If float, should be between 0.0 and 1.0 and represent the proportion
-            of the dataset to include in the train split. If int, represents the
-            absolute number of train samples.
-
-        test_size (float or int): If float, should be between 0.0 and 1.0 and represent the proportion
-            of the pool dataset to include in the test split. If int, represents the
-            absolute number of test samples.
-
-    """
+def split_active_learning(X, Y, init_train_size, test_size, withdrawn_category):
     sampler0 = StratifiedShuffleSplit(n_splits=1, train_size=init_train_size, random_state=RANDOM_STATE)
     idxs_ini, idxs_others = next(sampler0.split(X, Y))
     x_0, y_0 = X[idxs_ini], Y[idxs_ini]
-
-    # Here we ensures traindataset have at least 5 samples of each class
-    for i in range(max(Y)):
-        n = (y_0 == i).sum()
-        if n < min_sample:
-            idxs_ini = np.append(idxs_ini, np.where(Y == i)[0][:min_sample - n])
-            x_0, y_0 = X[idxs_ini], Y[idxs_ini]
     xo, yo = X[idxs_others], Y[idxs_others]
 
     sampler_pool = StratifiedShuffleSplit(n_splits=1, test_size=test_size, random_state=RANDOM_STATE)
     idxs_pool, idxs_test = next(sampler_pool.split(xo, yo))
     x_pool, y_pool = xo[idxs_pool], yo[idxs_pool]
     x_test, y_test = xo[idxs_test], yo[idxs_test]
+
+    if withdrawn_category != 'all':
+
+        indexs_to_remove = np.where(y_0 == withdrawn_category)[0].tolist()
+        idx_to_stay = random.sample(indexs_to_remove, k=5)
+        for id in range(len(idx_to_stay)):
+            indexs_to_remove.remove(idx_to_stay[id])
+
+        y_0 = np.delete(y_0, [tuple(np.array(indexs_to_remove))])
+
+        a0, a1, a2 = x_0.shape
+        mask = np.ones_like(x_0, dtype=bool)
+        mask[indexs_to_remove, np.arange(a1), :] = False
+        x_0 = x_0[mask].reshape((-1, a1, a2))
 
     return x_0, y_0, x_pool, y_pool, x_test, y_test
 
@@ -227,21 +221,30 @@ def iterateActiveLearners(estimator: sklearn.base.BaseEstimator, x_0, y_0, query
     """
     for qstrat_name, qstrat in query_strategies.items():
         new_estimator_name = "%s [%s]" % (estimator_name, qstrat_name)
-        aclearner = ActiveLearner(estimator=estimator, X_training=x_0, y_training=y_0, query_strategy=qstrat)
+        aclearner = ActiveLearner(estimator=estimator, X_training=x_0, y_training=y_0,
+                                  query_strategy=qstrat)
         yield new_estimator_name, aclearner
 
 
 def run_active_learning(classifier: sklearn.base.BaseEstimator, x_0, y_0, x_pool, y_pool, x_test, y_test,
-                        query_strategies, query_size, budget, scoring, classifier_name):
+                        query_strategies, query_size, budget, scoring, classifier_name, withdrawn_category,
+                        early):
     results = {}
     for estimator_name, aclearner in iterateActiveLearners(classifier, x_0, y_0, query_strategies, classifier_name):
-        scores = active_learning(aclearner, x_pool, y_pool, x_test, y_test, query_size, budget, scoring)
+        scores, percent_each_class = active_learning(aclearner, x_pool, y_pool, x_test, y_test, query_size, budget,
+                                                     scoring)
         scores['queried samples'] += len(x_0)
         results[estimator_name] = scores
+        f = open(
+            f"results/{withdrawn_category}/percent_{classifier_name}_{early}_{withdrawn_category}_{estimator_name}.txt",
+            "w")
+        f.write(str(percent_each_class))
+        f.close()
     return results
 
 
 def main(initial_configs, d):
+    early = time.time()
     global DEEP_CACHE_DIR, PIPELINE_CACHE_DIR
 
     query_strategies = initial_configs.query_strategies
@@ -252,9 +255,14 @@ def main(initial_configs, d):
 
     scoring = get_metrics()
 
+    print(x.shape)
+    unique, counts = np.unique(y, return_counts=True)
+    print(dict(zip(unique, counts)))
+
     x_0, y_0, x_pool, y_pool, x_test, y_test = split_active_learning(x, y,
                                                                      init_train_size=initial_configs.init_train_size,
-                                                                     test_size=initial_configs.test_size)
+                                                                     test_size=initial_configs.test_size,
+                                                                     withdrawn_category=initial_configs.withdrawn_category)
 
     # All classifiers scales features to mean=0 and std=1.
     base_classifiers = get_base_classifiers(('normalizer', StandardScaler()))
@@ -264,12 +272,20 @@ def main(initial_configs, d):
 
     for classifier_name, classifier in combine_transformer_classifier(transformers, base_classifiers):
         print(classifier_name, classifier)
-        r = distance_active_learning(classifier, x_0, y_0, x_pool, y_pool, x_test, y_test,
-                                     initial_configs.query_size, initial_configs.budget, scoring, classifier_name)
+        r, percent_each_class = distance_active_learning(classifier, x_0, y_0, x_pool, y_pool, x_test, y_test,
+                                                         initial_configs.query_size, initial_configs.budget,
+                                                         scoring, classifier_name)
         results.update(r)
+        f = open(
+            f"results/{initial_configs.withdrawn_category}/percent_{classifier_name}_{early}_{initial_configs.withdrawn_category}_topmargin.txt",
+            "w")
+        f.write(str(percent_each_class))
+        f.close()
         r_2 = run_active_learning(classifier, x_0, y_0, x_pool, y_pool, x_test, y_test,
-                                  query_strategies, initial_configs.query_size, initial_configs.budget,
-                                  scoring, classifier_name)
+                                  query_strategies, initial_configs.query_size,
+                                  initial_configs.budget,
+                                  scoring, classifier_name, initial_configs.withdrawn_category,
+                                  early)
         results.update(r_2)
         print(results)
 
@@ -289,9 +305,11 @@ def main(initial_configs, d):
                     results_asmatrix.append((classif_name, metric_name, i, queried_samples[i], r))
 
     if initial_configs.save_file is not None:
-        df = pd.DataFrame(results_asmatrix, columns=['classifier name', 'metric name', 'step', 'train size', 'value'])
+        df = pd.DataFrame(results_asmatrix,
+                          columns=['classifier name', 'metric name', 'step', 'train size', 'value'])
         df.to_csv(
-            'results_1/' + str(initial_configs.save_file).replace('.csv', f'{str(time.time()).replace(".", "")}.csv'),
+            f'results/{initial_configs.withdrawn_category}/dfs/' + str(initial_configs.save_file).replace('.csv', f'{str(early).replace(".", "")}_'
+                                                                              f'{initial_configs.withdrawn_category}.csv'),
             index=False)
     rmtree(PIPELINE_CACHE_DIR)
     rmtree(DEEP_CACHE_DIR)
@@ -301,8 +319,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--initial_configs', type=Path, required=True, help="YAML initial_configs file")
     parser.add_argument('-i', '--inputdata', type=Path, required=True, help="Input directory of dataset")
-    parser.add_argument('-o', '--outfile', type=Path, required=True,
-                        help="Output csv file containing all the results.")
+    parser.add_argument('-o', '--outfile', type=Path, required=True, help="Output csv file containing all the results.")
     args = parser.parse_args()
     initial_configs = load_yaml(args.initial_configs, args.inputdata, args.outfile)
     D = load_rpdbcs_data(initial_configs.dataset_path)
