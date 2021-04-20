@@ -1,0 +1,10 @@
+---
+init_train_size: 30
+test_size: 0.205
+query_size: 25
+budget: 500
+
+query_strategies:
+    - random
+    - entropy
+...
