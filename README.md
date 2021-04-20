@@ -17,4 +17,4 @@ The experiment_configs.yaml file contains the experimental settings.
 
 # Result
 
-![Result AL/RF](https://github.com/bernardomotabarbosa/active_learning/blob/master/results/charts/RF.png?raw=true)
+![Result AL/RF](https://github.com/bernardomotabarbosa/active_learning_triplet_network/blob/master/results/charts/RF.png?raw=true)
