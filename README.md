@@ -3,8 +3,8 @@
 Recommended to use python 3.6.9
 
 ```
-git clone https://github.com/bernardomotabarbosa/active_learning_repo.git
-cd active_learning
+git clone https://github.com/bernardomotabarbosa/active_learning_triplet_network.git
+cd active_learning_triplet_network
 pip install -r requirements.txt
 pip install git+http://gitlab.ninfa.inf.ufes.br/ninfa-ufes/deep-rpdbcs#subdirectory=src/python
 ```
