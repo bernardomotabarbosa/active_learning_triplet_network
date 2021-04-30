@@ -3,7 +3,7 @@ init_train_size: 1000
 test_size: 0.36
 query_size: 25
 budget: 500
-withdrawn_category: 2
+withdrawn_category: 4
 
 query_strategies:
     - random
