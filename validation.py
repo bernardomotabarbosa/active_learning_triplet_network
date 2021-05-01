@@ -291,7 +291,7 @@ def main(initial_configs, d):
     if initial_configs.save_file is not None:
         df = pd.DataFrame(results_asmatrix, columns=['classifier name', 'metric name', 'step', 'train size', 'value'])
         df.to_csv(
-            'results_1/' + str(initial_configs.save_file).replace('.csv', f'{str(time.time()).replace(".", "")}.csv'),
+            'results/' + str(initial_configs.save_file).replace('.csv', f'{str(time.time()).replace(".", "")}.csv'),
             index=False)
     rmtree(PIPELINE_CACHE_DIR)
     rmtree(DEEP_CACHE_DIR)
