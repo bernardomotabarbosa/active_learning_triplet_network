@@ -33,6 +33,7 @@ df_entropy = df_entropy.drop(['classifier name'], axis=1)
 df_random = df_random.drop(['classifier name'], axis=1)
 df_top_two_margin = df_top_two_margin.drop(['classifier name'], axis=1)
 
+# Write results to csv
 df_entropy.round(4).to_csv('results/metrics_per_step/df_entropy.csv', index=False)
 df_random.round(4).to_csv('results/metrics_per_step/df_random.csv', index=False)
 df_top_two_margin.round(4).to_csv('results/metrics_per_step/df_top_two_margin.csv', index=False)
