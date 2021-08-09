@@ -26,3 +26,5 @@ The experiment_configs.yaml file contains the experimental settings.
 # Result
 
 ![Result AL/RF](https://github.com/bernardomotabarbosa/active_learning_triplet_network/blob/master/results/charts/RF.png?raw=true)
+
+This active learning methodology applied to deep modeling of BCS system failure detection and diagnosis was developed with the objective of reducing the expense of time and financial resources used to achieve the desired results with the modeling. Empirical evidence shows that active learning using acquisition functions such as Maximum Entropy or Top-Two-Margin is able to improve the performance of a model with a much smaller amount of data compared to a random selection of data to be labeled by an expert in the field. Furthermore, I found strong evidence that this technique is also useful in the training scenario of the model, considering a new defect that is still unrepresentative in the mass of training data.
